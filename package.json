@@ -1,0 +1,19 @@
+{
+  "name": "latex-stats",
+  "version": "0.0.0",
+  "description": "latex-stats ===========",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/relekang/latex-stats.git"
+  },
+  "author": "Rolf Erik Lekang <me@rolflekang.com> (http://rolflekang.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/relekang/latex-stats/issues"
+  },
+  "homepage": "https://github.com/relekang/latex-stats"
+}
