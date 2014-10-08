@@ -1,0 +1,44 @@
+import fs
+
+import redis
+import hogan
+
+r = redis.createClient()
+
+export createGraphData
+
+createGraphData = (callback) ->
+    r.hgetall('postats', (err, res) ->
+        if err
+            return callback(err, res)
+
+        graphData = {
+            pages: []
+            words: []
+            equations: []
+            figures: []
+            fixmes: []
+            days: Object.keys(res)
+        }
+
+        for value of res
+            value = JSON.parse(res[value])
+            graphData.pages.push(value.pages)
+            graphData.words.push(value.words)
+            graphData.equations.push(value.equations)
+            graphData.figures.push(value.figures)
+            graphData.fixmes.push(value.fixmes)
+
+        callback(graphData)
+    )
+
+createGraphData((data) ->
+    console.log(data)
+     
+    fs.readFile('graph.hogan', (err, content) ->
+        template = hogan.compile(content.toString())
+        fs.writeFile('dist/index.html', template.render(data), (err, res) ->
+            process.exit(0)
+        )
+    )
+)

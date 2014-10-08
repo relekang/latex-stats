@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body style="text-align:center;">
+    <h1>prosjektoppgave</h1>
+    <h2>Sider</h2>
+    <canvas id="pageChart" width="800" height="400"></canvas>
+    <h2>Ord</h2>
+    <canvas id="wordChart" width="800" height="400"></canvas>
+    <h2>...</h2>
+    <canvas id="etcChart" width="800" height="400"></canvas>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+    <script type="text/javascript">
+      var labels = [{{days}}];
+      var etcData = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Equations",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(20,220,220,0.8)",
+            data: [{{equations}}]
+          }, {
+            label: "Figures",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(220,20,220,0.8)",
+            data:  [{{figures}}]
+          }, {
+            label: "FIXME",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(250,200,220,0.8)",
+            data: [{{fixmes}}]
+          }
+        ]
+      };
+      var pageData = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Pages",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [{{pages}}]
+          } 
+        ]
+      };
+      var wordData = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Words",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [{{words}}]
+          } 
+        ]
+      };
+      var initChart = function(id, data) {
+        var ctx = document.getElementById(id).getContext("2d");
+        var lineChart = new Chart(ctx).Line(data, {});
+      };
+      
+      initChart("pageChart", pageData);
+      initChart("wordChart", wordData);
+      initChart("etcChart", etcData);
+    </script>
+  </body>
+</html>
