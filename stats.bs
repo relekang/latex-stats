@@ -1,0 +1,30 @@
+import child_process: exec
+import moment
+import redis
+
+r = redis.createClient()
+
+export generate_stats
+
+generate_stats = (path, filename) ->
+    stats = {}
+    execOptions = { cwd: path }
+    exec('make stats', execOptions, (error, stdout, stderr) ->
+        matchPages = /Pages\:(?:[^0-9]*)(\d+)/.exec(stdout)
+        matchWords = /Sum count\:(?:[^0-9]*)(\d+)/.exec(stdout)
+        matchEquations = /math displayed\:(?:[^0-9]*)(\d+)/.exec(stdout)
+        matchFigures = /floats\/tables\/figures\:(?:[^0-9]*)(\d+)/.exec(stdout)
+        matchFixmes = /FIXME\:(?:[^0-9]*)(\d+)/.exec(stdout)
+        stats.pages = parseInt(matchPages[1], 10)
+        stats.words = parseInt(matchWords[1], 10)
+        stats.equations = parseInt(matchEquations[1], 10)
+        stats.figures = parseInt(matchFigures[1], 10)
+        stats.fixmes = parseInt(matchFixmes[1], 10)
+        r.hset('postats', moment().format('YYYYMMDD'), JSON.stringify(stats), (err, res) ->
+            console.log(stats)
+            process.exit(0)
+        )
+    )
+
+generate_stats('/home/rolf/prosjektoppgave/', 'report')
+
