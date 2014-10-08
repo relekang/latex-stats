@@ -5,7 +5,17 @@ import hogan
 
 r = redis.createClient()
 
-export createGraphData
+export () ->
+    createGraphData((data) ->
+        console.log(data)
+         
+        fs.readFile('graph.hogan', (err, content) ->
+            template = hogan.compile(content.toString())
+            fs.writeFile('dist/index.html', template.render(data), (err, res) ->
+                process.exit(0)
+            )
+        )
+    )
 
 createGraphData = (callback) ->
     r.hgetall('postats', (err, res) ->
@@ -32,13 +42,3 @@ createGraphData = (callback) ->
         callback(graphData)
     )
 
-createGraphData((data) ->
-    console.log(data)
-     
-    fs.readFile('graph.hogan', (err, content) ->
-        template = hogan.compile(content.toString())
-        fs.writeFile('dist/index.html', template.render(data), (err, res) ->
-            process.exit(0)
-        )
-    )
-)

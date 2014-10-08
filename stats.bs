@@ -25,6 +25,3 @@ generate_stats = (path, filename) ->
             process.exit(0)
         )
     )
-
-generate_stats('/home/rolf/prosjektoppgave/', 'report')
-

@@ -1,1 +1,33 @@
-# FIXME
+import commander as program
+
+import ./stats
+import ./createGraphData
+
+version = require('./package.json').version
+
+export program
+
+program
+    .version(version)
+    .usage('<command> (<working-dir> <filename>)')
+    .parse(process.argv)
+
+if not program.args[0]
+    console.log('Missing command')
+    process.exit(1)
+
+if program.args[0] == 'log'
+    if not program.args[1]
+        console.log('Missing path')
+        process.exit(1)
+
+    if not program.args[2]
+        console.log('Missing filename')
+        process.exit(1)
+    
+    stats(program.args[1], program.args[2])
+
+elif program.args[0] == 'graph'
+    createGraphData(() ->
+        process.exit(0)
+    )

@@ -1,11 +1,18 @@
 {
   "name": "latex-stats",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    'createGraphData.js', 
+    'index.js', 
+    'stats.js', 
+    'LICENSE', 
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/relekang/latex-stats.git"
@@ -15,9 +22,10 @@
   "bugs": {
     "url": "https://github.com/relekang/latex-stats/issues"
   },
-  "homepage": "https://github.com/relekang/latex-stats"
+  "homepage": "https://github.com/relekang/latex-stats",
   "dependencies": {
     "bailey": "0.0.13",
+    "commander": "^2.3.0",
     "moment": "^2.8.3",
     "redis": "^0.12.1"
   }
