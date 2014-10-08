@@ -5,14 +5,9 @@
   "main": "index.js",
   "bin": "./index.js",
   "scripts": {
+    "install": "make",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "files": [
-    'createGraphData.js', 
-    'index.js', 
-    'stats.js', 
-    'LICENSE', 
-  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/relekang/latex-stats.git"
