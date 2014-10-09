@@ -3,8 +3,18 @@ var moment = require("moment");
 var redis = require("redis");
 var exec = __module_child_process.exec;
 
-var r = redis.createClient();
 
+var save_stats = function(key, stats, path) {
+    try {
+        var r = redis.createClient();
+        r.hset('postats', key, JSON.stringify(stats), function(err, res) {
+            console.log(stats);
+            process.exit(0);
+        });
+    } catch (e) {
+        console.log('No redis db available');
+    }
+};
 
 var generate_stats = function(path, filename) {
     var stats = {};
@@ -22,10 +32,7 @@ var generate_stats = function(path, filename) {
         stats.equations = parseInt(matchEquations[1], 10);
         stats.figures = parseInt(matchFigures[1], 10);
         stats.fixmes = parseInt(matchFixmes[1], 10);
-        r.hset('postats', moment().format('YYYYMMDD'), JSON.stringify(stats), function(err, res) {
-            console.log(stats);
-            process.exit(0);
-        });
+        save_stats(moment().format('YYYYMMDD'), stats);
     });
 };
 
