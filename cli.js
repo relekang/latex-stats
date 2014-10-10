@@ -20,7 +20,7 @@ if (!program.command) {
 if (program.command === 'log') {
     stats(program.path, program.args[1]);
 } else if (program.command === 'graph') {
-    createGraphData(path, function() {
+    createGraphData(program.path, function() {
         process.exit(0);
     });
 }

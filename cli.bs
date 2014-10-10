@@ -27,6 +27,6 @@ if program.command == 'log'
     stats(program.path, program.args[1])
 
 elif program.command == 'graph'
-    createGraphData(path, () ->
+    createGraphData(program.path, () ->
         process.exit(0)
     )
