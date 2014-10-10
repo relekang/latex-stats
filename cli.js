@@ -18,10 +18,24 @@ if (!program.command) {
 }
 
 if (program.command === 'log') {
-    stats(program.path, program.args[1]);
+    stats(program.path, program.file, function(err, stats) {
+        if (err) {
+            console.log(err);
+            process.exit(1);
+        } else {
+            console.log('Collected these stats ' + stats + '');
+            process.exit(0);
+        }
+    });
 } else if (program.command === 'graph') {
-    createGraph(program.path, function() {
-        process.exit(0);
+    createGraph(program.path, function(err, filename) {
+        if (err) {
+            console.log(err);
+            process.exit(1);
+        } else {
+            console.log('Created file ' + filename + '');
+            process.exit(0);
+        }
     });
 }
 

@@ -4,19 +4,18 @@ var redis = require("redis");
 var exec = __module_child_process.exec;
 
 
-var save_stats = function(key, stats, path) {
+var save_stats = function(key, stats, path, callback) {
     try {
         var r = redis.createClient();
         r.hset('postats', key, JSON.stringify(stats), function(err, res) {
-            console.log(stats);
-            process.exit(0);
+            callback(null, stats);
         });
     } catch (e) {
-        console.log('No redis db available');
+        callback('Could not save to redis', stats);
     }
 };
 
-var generate_stats = function(path, filename) {
+var generate_stats = function(path, filename, callback) {
     var stats = {};
     var execOptions = {
         'cwd': path
@@ -32,7 +31,7 @@ var generate_stats = function(path, filename) {
         stats.equations = parseInt(matchEquations[1], 10);
         stats.figures = parseInt(matchFigures[1], 10);
         stats.fixmes = parseInt(matchFixmes[1], 10);
-        save_stats(moment().format('YYYYMMDD'), stats);
+        save_stats(moment().format('YYYYMMDD'), stats, callback);
     });
 };
 

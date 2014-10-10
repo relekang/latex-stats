@@ -24,9 +24,21 @@ if not program.command
     process.exit(1)
 
 if program.command == 'log'
-    stats(program.path, program.args[1])
+    stats(program.path, program.file, (err, stats) ->
+        if err
+            console.log(err)
+            process.exit(1)
+        else
+            console.log('Collected these stats #{stats}')
+            process.exit(0)
+    )
 
 elif program.command == 'graph'
-    createGraph(program.path, () ->
-        process.exit(0)
+    createGraph(program.path, (err, filename) ->
+        if err
+            console.log(err)
+            process.exit(1)
+        else
+            console.log('Created file #{filename}')
+            process.exit(0)
     )

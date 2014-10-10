@@ -36,12 +36,11 @@ var createGraphData = function(callback) {
 
 module.exports = function(path, callback) {
     createGraphData(function(data) {
-        console.log(data);
-
         fs.readFile('' + __dirname + '/graph.hogan', function(err, content) {
             var template = hogan.compile(content.toString());
-            fs.writeFile('' + path + '/index.html', template.render(data), function(err, res) {
-                callback && callback();
+            var filename = '' + path + '/index.html';
+            fs.writeFile(filename, template.render(data), function(err, res) {
+                callback && callback(err, filename);
             });
         });
     });

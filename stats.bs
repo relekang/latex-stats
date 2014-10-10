@@ -4,17 +4,16 @@ import redis
 
 export generate_stats
 
-save_stats = (key, stats, path) ->
+save_stats = (key, stats, path, callback) ->
     try
         r = redis.createClient()
         r.hset('postats', key, JSON.stringify(stats), (err, res) ->
-            console.log(stats)
-            process.exit(0)
+            callback(null, stats)
         )
     catch e
-        console.log('No redis db available')
+        callback('Could not save to redis', stats)
 
-generate_stats = (path, filename) ->
+generate_stats = (path, filename, callback) ->
     stats = {}
     execOptions = { cwd: path }
     exec('make stats', execOptions, (error, stdout, stderr) ->
@@ -28,5 +27,5 @@ generate_stats = (path, filename) ->
         stats.equations = parseInt(matchEquations[1], 10)
         stats.figures = parseInt(matchFigures[1], 10)
         stats.fixmes = parseInt(matchFixmes[1], 10)
-        save_stats(moment().format('YYYYMMDD'), stats)
+        save_stats(moment().format('YYYYMMDD'), stats, callback)
     )
