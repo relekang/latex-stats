@@ -1,7 +1,7 @@
 import commander as program
 
 import ./stats
-import ./createGraphData
+import ./createGraph
 
 version = require('./package.json').version
 
@@ -27,6 +27,6 @@ if program.command == 'log'
     stats(program.path, program.args[1])
 
 elif program.command == 'graph'
-    createGraphData(program.path, () ->
+    createGraph(program.path, () ->
         process.exit(0)
     )

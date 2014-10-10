@@ -1,6 +1,6 @@
 var program = require("commander");
 var stats = require("./stats");
-var createGraphData = require("./createGraphData");
+var createGraph = require("./createGraph");
 
 var version = require('./package.json').version;
 
@@ -20,7 +20,7 @@ if (!program.command) {
 if (program.command === 'log') {
     stats(program.path, program.args[1]);
 } else if (program.command === 'graph') {
-    createGraphData(program.path, function() {
+    createGraph(program.path, function() {
         process.exit(0);
     });
 }

@@ -38,7 +38,7 @@ module.exports = function(path, callback) {
     createGraphData(function(data) {
         console.log(data);
 
-        fs.readFile('graph.hogan', function(err, content) {
+        fs.readFile('' + __dirname + '/graph.hogan', function(err, content) {
             var template = hogan.compile(content.toString());
             fs.writeFile('' + path + '/index.html', template.render(data), function(err, res) {
                 callback && callback();

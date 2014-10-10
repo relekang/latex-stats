@@ -9,7 +9,7 @@ export (path, callback) ->
     createGraphData((data) ->
         console.log(data)
          
-        fs.readFile('graph.hogan', (err, content) ->
+        fs.readFile('#{__dirname}/graph.hogan', (err, content) ->
             template = hogan.compile(content.toString())
             fs.writeFile('#{path}/index.html', template.render(data), (err, res) ->
                 callback and callback()
