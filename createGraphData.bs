@@ -5,14 +5,14 @@ import hogan
 
 r = redis.createClient()
 
-export () ->
+export (path, callback) ->
     createGraphData((data) ->
         console.log(data)
          
         fs.readFile('graph.hogan', (err, content) ->
             template = hogan.compile(content.toString())
-            fs.writeFile('dist/index.html', template.render(data), (err, res) ->
-                process.exit(0)
+            fs.writeFile('#{path}/index.html', template.render(data), (err, res) ->
+                callback and callback()
             )
         )
     )

@@ -9,25 +9,24 @@ export program
 
 program
     .version(version)
-    .usage('<command> (<working-dir> <filename>)')
+    .usage('<command> (<filename>)')
+    .option('-p, --path <path>')
+    .option('-f, --file <name>')
     .parse(process.argv)
 
-if not program.args[0]
+program.path = program.path or process.cwd()
+program.file = program.file or 'main'
+program.command = program.args[0]
+
+
+if not program.command
     console.log('Missing command')
     process.exit(1)
 
-if program.args[0] == 'log'
-    if not program.args[1]
-        console.log('Missing path')
-        process.exit(1)
+if program.command == 'log'
+    stats(program.path, program.args[1])
 
-    if not program.args[2]
-        console.log('Missing filename')
-        process.exit(1)
-    
-    stats(program.args[1], program.args[2])
-
-elif program.args[0] == 'graph'
-    createGraphData(() ->
+elif program.command == 'graph'
+    createGraphData(path, () ->
         process.exit(0)
     )
